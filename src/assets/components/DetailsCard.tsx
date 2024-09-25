@@ -9,7 +9,6 @@ export default function DetailsCard({todo, detailView, isDetailView}) {
             </div>
             <div id="card-buttons">
             <button onClick={() => isDetailView(!detailView)}>back</button>
-                <button>edit</button>
             </div>
 
         </div>

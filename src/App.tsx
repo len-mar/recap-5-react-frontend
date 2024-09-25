@@ -11,12 +11,7 @@ import {Route, Routes} from "react-router-dom";
 // TODO: board with cards with delete button when done
 // TODO: input field
 // TODO: edit component
-//  details component
-// TODO: ENDPOINTS
-//  get all todos
-//  get all todos by status
-//  post new to do
-//  delete to do
+
 export type Todo = {
     description: string,
     status: string

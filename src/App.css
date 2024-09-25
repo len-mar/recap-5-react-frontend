@@ -69,3 +69,7 @@ td{
 #card-buttons{
   display: flex;
 }
+
+#edit-card, #edit-input{
+  width: 100px;
+}

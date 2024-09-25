@@ -4,6 +4,7 @@ import TodoCard from "./TodoCard.tsx";
 import {useEffect, useState} from "react";
 import axios from "axios";
 import {Todo} from "../../App.tsx";
+import CardContainer from "./CardContainer.tsx";
 
 export default function Board({todos, setTodos}) {
     const [todoTodos, setTodoTodos] = useState<Todo[]>([])
@@ -19,17 +20,16 @@ export default function Board({todos, setTodos}) {
         renderTodosByStatus(todos)
     },[todos])
 
-
     const [input, setInput] = useState<string>()
-    function addTodo(newTodo){
+    function addTodo(input){
+        const newTodo:Todo = {description: input, status: "OPEN"}
         axios.post("/api/todo", newTodo).then(r => setTodos([...todos,r.data]))
     }
 
     const handleSubmit = (event) => {
         alert('A todo was submitted: ' + input);
         event.preventDefault();
-        const newTodo:Todo = {description: input, status: "OPEN"}
-        addTodo(newTodo)
+        addTodo(input)
     };
 
     // console.log(todoTodos)
@@ -45,13 +45,13 @@ export default function Board({todos, setTodos}) {
             <tbody>
             <tr>
                 <td>
-                    {todoTodos.map(t => <TodoCard key={t.id} todo={t} todos={todos} setTodos={setTodos}/>)}
+                    {todoTodos.map(t => <CardContainer key={t.id} todo={t} todos={todos} setTodos={setTodos}/>)}
                 </td>
                 <td>
-                    {doingTodos.map(t => <TodoCard key={t.id} todo={t} todos={todos} setTodos={setTodos}/>)}
+                    {doingTodos.map(t => <CardContainer key={t.id} todo={t} todos={todos} setTodos={setTodos}/>)}
                 </td>
                 <td>
-                    {doneTodos.map(t => <TodoCard key={t.id} todo={t} todos={todos} setTodos={setTodos}/>)}
+                    {doneTodos.map(t => <CardContainer key={t.id} todo={t} todos={todos} setTodos={setTodos}/>)}
                 </td>
 
             </tr>
