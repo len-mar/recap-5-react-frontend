@@ -1,0 +1,72 @@
+// new to do: always in new tr element
+// TODO: how do they move?
+import TodoCard from "./TodoCard.tsx";
+import {useEffect, useState} from "react";
+import axios from "axios";
+import {Todo} from "../../App.tsx";
+
+export default function Board({todos, setTodos}) {
+    const [todoTodos, setTodoTodos] = useState<Todo[]>([])
+    const [doingTodos, setDoingTodos] = useState<Todo[]>([])
+    const [doneTodos, setDoneTodos] = useState<Todo[]>([])
+
+    function renderTodosByStatus(todos:Todo[]){
+        setTodoTodos(todos.filter(t => t.status === "OPEN"))
+        setDoingTodos(todos.filter(t => t.status === "DOING"))
+        setDoneTodos(todos.filter(t => t.status === "DONE"))
+    }
+    useEffect(() => {
+        renderTodosByStatus(todos)
+    },[todos])
+
+
+    const [input, setInput] = useState<string>()
+    function addTodo(newTodo){
+        axios.post("/api/todo", newTodo).then(r => setTodos([...todos,r.data]))
+    }
+
+    const handleSubmit = (event) => {
+        alert('A todo was submitted: ' + input);
+        event.preventDefault();
+        const newTodo:Todo = {description: input, status: "OPEN"}
+        addTodo(newTodo)
+    };
+
+    // console.log(todoTodos)
+    return <>
+        <h2>this is the board</h2>
+        <table>
+            <thead>
+            <td>todo</td>
+            <td>doing</td>
+            <td>done</td>
+            </thead>
+
+            <tbody>
+            <tr>
+                <td>
+                    {todoTodos.map(t => <TodoCard key={t.id} todo={t} todos={todos} setTodos={setTodos}/>)}
+                </td>
+                <td>
+                    {doingTodos.map(t => <TodoCard key={t.id} todo={t} todos={todos} setTodos={setTodos}/>)}
+                </td>
+                <td>
+                    {doneTodos.map(t => <TodoCard key={t.id} todo={t} todos={todos} setTodos={setTodos}/>)}
+                </td>
+
+            </tr>
+
+            </tbody>
+
+
+        </table>
+
+        <form onSubmit={handleSubmit}>
+            <input
+                value={input}
+                onChange={event => setInput(event.target.value)}
+            />
+            <button type={"submit"}>add todo</button>
+        </form>
+    </>
+}
