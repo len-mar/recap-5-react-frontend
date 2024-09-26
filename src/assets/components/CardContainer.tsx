@@ -1,8 +1,5 @@
-import {useNavigate} from "react-router-dom";
 import DetailsCard from "./DetailsCard.tsx";
 import {useState} from "react";
-import axios from "axios";
-import {Todo} from "../../App.tsx";
 import EditCard from "./EditCard.tsx";
 import TodoCard from "./TodoCard.tsx";
 
@@ -13,8 +10,8 @@ export default function CardContainer(props) {
     return <>
         {detailView || editView ? detailView ?
                 <DetailsCard todo={props.todo} isDetailView={isDetailView} detailView={detailView}/> :
-                <EditCard todo={props.todo} isEditView={isEditView} editView={editView}/> :
-            <TodoCard detailView={detailView} isDetailView={isDetailView} todo={props.todo}/>}
+                <EditCard todo={props.todo} isEditView={isEditView} editView={editView} todos={props.todos} setTodos={props.setTodos}/> :
+            <TodoCard detailView={detailView} isDetailView={isDetailView} isEditView={isEditView} editView={editView}  todo={props.todo} todos={props.todos} setTodos={props.setTodos}/>}
 
 
     </>

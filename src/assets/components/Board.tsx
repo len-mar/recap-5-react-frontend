@@ -1,11 +1,10 @@
-// new to do: always in new tr element
-// TODO: how do they move?
-import TodoCard from "./TodoCard.tsx";
 import {useEffect, useState} from "react";
 import axios from "axios";
 import {Todo} from "../../App.tsx";
 import CardContainer from "./CardContainer.tsx";
 
+// TODO: make this use regular props
+// TODO: fix table element thing (td cant be child of thead)
 export default function Board({todos, setTodos}) {
     const [todoTodos, setTodoTodos] = useState<Todo[]>([])
     const [doingTodos, setDoingTodos] = useState<Todo[]>([])
@@ -27,9 +26,9 @@ export default function Board({todos, setTodos}) {
     }
 
     const handleSubmit = (event) => {
-        alert('A todo was submitted: ' + input);
         event.preventDefault();
         addTodo(input)
+        setInput("")
     };
 
     // console.log(todoTodos)

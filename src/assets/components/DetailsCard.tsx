@@ -1,14 +1,14 @@
-export default function DetailsCard({todo, detailView, isDetailView}) {
+export default function DetailsCard(props) {
 
     return <>
         <div id="card">
             <div id="card-text">
-                <p>Description: {todo.description}</p>
-                <p>Status: {todo.status}</p>
+                <p>Description: {props.todo.description}</p>
+                <p>Status: {props.todo.status}</p>
 
             </div>
             <div id="card-buttons">
-            <button onClick={() => isDetailView(!detailView)}>back</button>
+            <button onClick={() => props.isDetailView(!props.detailView)}>back</button>
             </div>
 
         </div>

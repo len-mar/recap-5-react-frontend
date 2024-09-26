@@ -1,9 +1,6 @@
-import {useNavigate} from "react-router-dom";
-import DetailsCard from "./DetailsCard.tsx";
 import {useState} from "react";
 import axios from "axios";
 import {Todo} from "../../App.tsx";
-import EditCard from "./EditCard.tsx";
 
 export default function TodoCard(props) {
 
@@ -27,7 +24,7 @@ export default function TodoCard(props) {
         </div>
         <div id="card-buttons">
             <button onClick={() => props.isDetailView(!props.detailView)}>details</button>
-            <button>edit</button>
+            <button onClick={() => props.isEditView(!props.editView)}>edit</button>
             {done ? <button onClick={advanceTodo}>delete</button> : <button onClick={advanceTodo}>advance</button>}
         </div>
     </div>
