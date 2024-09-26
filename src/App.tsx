@@ -3,10 +3,8 @@ import './App.css'
 import Board from "./assets/components/Board.tsx";
 import axios from "axios";
 
-// TODO: fix edit dialog to fit better
-// TODO: make it pretty
-// TODO: make code look a bit nicer
-
+// TODO: refactor and abstract where it makes sense
+// TODO: style with tailwind (or smth similar)
 
 export type Todo = {
     description: string,
