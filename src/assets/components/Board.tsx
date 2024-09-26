@@ -7,7 +7,6 @@ type BoardProps = {
     todos: Todo[],
     setTodos: (todos: Todo[]) => void,
 }
-// TODO: fix table element thing (td cant be child of thead)
 export default function Board(props: BoardProps) {
     const [todoTodos, setTodoTodos] = useState<Todo[]>([])
     const [doingTodos, setDoingTodos] = useState<Todo[]>([])
