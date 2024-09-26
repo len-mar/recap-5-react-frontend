@@ -1,4 +1,12 @@
-export default function DetailsCard(props) {
+import {Todo} from "../../App.tsx";
+
+type DetailsCardProps = {
+    todo:Todo,
+    detailView:boolean,
+    isDetailView: (detailView:boolean) => void,
+}
+
+export default function DetailsCard(props:DetailsCardProps) {
 
     return <>
         <div id="card">

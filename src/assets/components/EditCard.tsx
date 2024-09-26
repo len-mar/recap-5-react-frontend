@@ -1,29 +1,33 @@
-import {Todo} from "../../App.tsx";
+import {Todo, TodoDTO} from "../../App.tsx";
 import axios from "axios";
 import {useState} from "react";
 
-export default function EditCard(props) {
+type EditCardProps = {
+    todo:Todo,
+    todos:Todo[],
+    setTodos: (todos:Todo[]) => void,
+    editView:boolean
+    isEditView: (editView:boolean) => void,
+}
+
+export default function EditCard(props:EditCardProps) {
     type Status = "OPEN" | "DOING" | "DONE"
     const statuses: Status[] = ["OPEN", "DOING", "DONE"]
     const [newDescription, setNewDescription] = useState<string>(props.todo.description)
     const [newStatus, setNewStatus] = useState<string>(props.todo.status)
 
-function handleInputChange(event){
-    const target = event.target;
-    const value = target.value;
-    const name = target.name;
-
-    if(name === "newDescription"){
-        setNewDescription(value)
-        target.value = newDescription
-    }
-    else
-        setNewStatus(value)
+function handleChangeInput(event:React.ChangeEvent<HTMLInputElement>){
+    setNewDescription(event.target.value)
+    event.target.value = newDescription
 }
+    function handleChangeSelect(event:React.ChangeEvent<HTMLSelectElement>){
+        setNewStatus(event.target.value)
+    }
 
-function handleSubmit(event){
+
+function handleSubmit(event:React.FormEvent<HTMLFormElement>){
     event.preventDefault();
-    const updatedTodo:Todo = {description: newDescription, status: newStatus}
+    const updatedTodo:TodoDTO = {description: newDescription, status: newStatus}
     axios.put("/api/todo/" + props.todo.id, updatedTodo).then(r => props.setTodos([...props.todos,r.data]))
     props.isEditView(!props.editView)
 }
@@ -32,9 +36,9 @@ function handleSubmit(event){
             <div id="card-text">
                 <form onSubmit={handleSubmit}>
                     <label>edit description:</label>
-                    <input id="edit-input" name="newDescription" onChange={handleInputChange} defaultValue={props.todo.description} value={newDescription}/>
+                    <input id="edit-input" name="newDescription" onChange={handleChangeInput} defaultValue={props.todo.description} value={newDescription}/>
                     <label>edit status:</label>
-                    <select name="newStatus" onChange={handleInputChange} defaultValue={props.todo.status}>
+                    <select name="newStatus" onChange={handleChangeSelect} defaultValue={props.todo.status}>
                         {statuses.map(s => <option key={s} value={s}>{s}</option>)}
                     </select>
                     <button>save changes</button>

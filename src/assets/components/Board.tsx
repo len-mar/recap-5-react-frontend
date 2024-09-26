@@ -1,31 +1,36 @@
 import {useEffect, useState} from "react";
 import axios from "axios";
-import {Todo} from "../../App.tsx";
+import {Todo, TodoDTO} from "../../App.tsx";
 import CardContainer from "./CardContainer.tsx";
 
-// TODO: make this use regular props
+type BoardProps = {
+    todos: Todo[],
+    setTodos: (todos: Todo[]) => void,
+}
 // TODO: fix table element thing (td cant be child of thead)
-export default function Board({todos, setTodos}) {
+export default function Board(props: BoardProps) {
     const [todoTodos, setTodoTodos] = useState<Todo[]>([])
     const [doingTodos, setDoingTodos] = useState<Todo[]>([])
     const [doneTodos, setDoneTodos] = useState<Todo[]>([])
 
-    function renderTodosByStatus(todos:Todo[]){
-        setTodoTodos(todos.filter(t => t.status === "OPEN"))
-        setDoingTodos(todos.filter(t => t.status === "DOING"))
-        setDoneTodos(todos.filter(t => t.status === "DONE"))
+    function renderTodosByStatus() {
+        setTodoTodos(props.todos.filter((t: Todo) => t.status === "OPEN"))
+        setDoingTodos(props.todos.filter((t: Todo) => t.status === "DOING"))
+        setDoneTodos(props.todos.filter((t: Todo) => t.status === "DONE"))
     }
+
     useEffect(() => {
-        renderTodosByStatus(todos)
-    },[todos])
+        renderTodosByStatus()
+    }, [props.todos])
 
-    const [input, setInput] = useState<string>()
-    function addTodo(input){
-        const newTodo:Todo = {description: input, status: "OPEN"}
-        axios.post("/api/todo", newTodo).then(r => setTodos([...todos,r.data]))
+    const [input, setInput] = useState<string>("")
+
+    function addTodo(input: string) {
+        const newTodo:TodoDTO = {description: input, status: "OPEN"}
+        axios.post("/api/todo", newTodo).then(r => props.setTodos([...props.todos, r.data]))
     }
 
-    const handleSubmit = (event) => {
+    const handleSubmit = (event:React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         addTodo(input)
         setInput("")
@@ -44,13 +49,16 @@ export default function Board({todos, setTodos}) {
             <tbody>
             <tr>
                 <td>
-                    {todoTodos.map(t => <CardContainer key={t.id} todo={t} todos={todos} setTodos={setTodos}/>)}
+                    {todoTodos.map(t => <CardContainer key={t.id} todo={t} todos={props.todos}
+                                                       setTodos={props.setTodos}/>)}
                 </td>
                 <td>
-                    {doingTodos.map(t => <CardContainer key={t.id} todo={t} todos={todos} setTodos={setTodos}/>)}
+                    {doingTodos.map(t => <CardContainer key={t.id} todo={t} todos={props.todos}
+                                                        setTodos={props.setTodos}/>)}
                 </td>
                 <td>
-                    {doneTodos.map(t => <CardContainer key={t.id} todo={t} todos={todos} setTodos={setTodos}/>)}
+                    {doneTodos.map(t => <CardContainer key={t.id} todo={t} todos={props.todos}
+                                                       setTodos={props.setTodos}/>)}
                 </td>
 
             </tr>

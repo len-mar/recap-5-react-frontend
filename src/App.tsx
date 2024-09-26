@@ -3,11 +3,16 @@ import './App.css'
 import Board from "./assets/components/Board.tsx";
 import axios from "axios";
 
-// TODO: add types to all and fix related issues
 // TODO: fix styling, primarily: table alignment
 // TODO: make it pretty
 
 export type Todo = {
+    description: string,
+    status: string
+    id: string
+}
+
+export type TodoDTO = {
     description: string,
     status: string
 }
