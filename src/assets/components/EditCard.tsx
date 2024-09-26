@@ -32,21 +32,16 @@ function handleSubmit(event:React.FormEvent<HTMLFormElement>){
     props.isEditView(!props.editView)
 }
     return <>
-        <div id="edit-card">
-            <div id="card-text">
-                <form onSubmit={handleSubmit}>
-                    <label>edit description:</label>
-                    <input id="edit-input" name="newDescription" onChange={handleChangeInput} defaultValue={props.todo.description} value={newDescription}/>
-                    <label>edit status:</label>
-                    <select name="newStatus" onChange={handleChangeSelect} defaultValue={props.todo.status}>
-                        {statuses.map(s => <option key={s} value={s}>{s}</option>)}
-                    </select>
-                    <button>save changes</button>
-                </form>
-            </div>
-            <div id="card-buttons">
-                <button onClick={() => props.isEditView(!props.editView)}>back</button>
-            </div>
-        </div>
+            <form onSubmit={handleSubmit}>
+                <label>edit description:</label>
+                <input id="edit-input" name="newDescription" onChange={handleChangeInput}
+                       defaultValue={props.todo.description} value={newDescription}/>
+                <label>edit status:</label>
+                <select name="newStatus" onChange={handleChangeSelect} defaultValue={props.todo.status}>
+                    {statuses.map(s => <option key={s} value={s}>{s}</option>)}
+                </select>
+                <button type="submit" className="edit-buttons">save changes</button>
+                <button onClick={() => props.isEditView(!props.editView)} className="edit-buttons">back</button>
+            </form>
     </>
 }
