@@ -38,12 +38,14 @@ export default function Board(props: BoardProps) {
 
     // console.log(todoTodos)
     return <>
-        <h2>this is the board</h2>
         <table>
+            <caption>this is the board</caption>
             <thead>
-            <td>todo</td>
-            <td>doing</td>
-            <td>done</td>
+            <tr>
+                <th>todo</th>
+                <th>doing</th>
+                <th>done</th>
+            </tr>
             </thead>
 
             <tbody>
@@ -64,7 +66,6 @@ export default function Board(props: BoardProps) {
             </tr>
 
             </tbody>
-
 
         </table>
 

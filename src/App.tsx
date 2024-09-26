@@ -3,8 +3,8 @@ import './App.css'
 import Board from "./assets/components/Board.tsx";
 import axios from "axios";
 
-// TODO: fix styling, primarily: table alignment
 // TODO: make it pretty
+// TODO: make code look a bit nicer
 
 export type Todo = {
     description: string,
