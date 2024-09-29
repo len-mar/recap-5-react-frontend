@@ -8,6 +8,7 @@ type EditCardProps = {
     setTodos: (todos: Todo[]) => void,
     editView: boolean
     isEditView: (editView: boolean) => void,
+    getTodos: () => void
 }
 type Status = "OPEN" | "DOING" | "DONE"
 
@@ -32,6 +33,7 @@ export default function EditCard(props: EditCardProps) {
         const updatedTodo: TodoDTO = {description: newDescription, status: newStatus}
         axios.put("/api/todo/" + props.todo.id, updatedTodo).then(r => props.setTodos([...props.todos, r.data]))
         props.isEditView(!props.editView)
+        props.getTodos()
     }
 
     return <>

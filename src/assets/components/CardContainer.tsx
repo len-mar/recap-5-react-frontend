@@ -19,7 +19,7 @@ export default function CardContainer(props: CardContainerProps) {
     return <>
         {detailView || editView ? detailView ?
                 <DetailsCard todo={props.todo} isDetailView={isDetailView} detailView={detailView}/> :
-                <EditCard todo={props.todo} isEditView={isEditView} editView={editView} todos={props.todos}
+                <EditCard getTodos={props.getTodos} todo={props.todo} isEditView={isEditView} editView={editView} todos={props.todos}
                           setTodos={props.setTodos}/> :
             <TodoCard getTodos={props.getTodos} detailView={detailView} isDetailView={isDetailView} isEditView={isEditView} editView={editView}
                       todo={props.todo} todos={props.todos} setTodos={props.setTodos}/>}

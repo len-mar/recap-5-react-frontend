@@ -4,7 +4,7 @@ import Board from "./assets/components/Board.tsx";
 import axios from "axios";
 
 // TODO: refactor and abstract where it makes sense
-// TODO: fix update of board when todo is updated
+// FIXME: fix update of board when todo is updated - use fetch data
 
 
 export type Todo = {
