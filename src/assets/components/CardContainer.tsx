@@ -8,18 +8,20 @@ type CardContainerProps = {
     todo: Todo,
     todos: Todo[],
     setTodos: (todos: Todo[]) => void,
+    getTodos: () => void
 }
 
 export default function CardContainer(props: CardContainerProps) {
     const [detailView, isDetailView] = useState<boolean>(false)
     const [editView, isEditView] = useState<boolean>(false)
 
+    // renders card based on view states
     return <>
         {detailView || editView ? detailView ?
                 <DetailsCard todo={props.todo} isDetailView={isDetailView} detailView={detailView}/> :
                 <EditCard todo={props.todo} isEditView={isEditView} editView={editView} todos={props.todos}
                           setTodos={props.setTodos}/> :
-            <TodoCard detailView={detailView} isDetailView={isDetailView} isEditView={isEditView} editView={editView}
+            <TodoCard getTodos={props.getTodos} detailView={detailView} isDetailView={isDetailView} isEditView={isEditView} editView={editView}
                       todo={props.todo} todos={props.todos} setTodos={props.setTodos}/>}
     </>
 }

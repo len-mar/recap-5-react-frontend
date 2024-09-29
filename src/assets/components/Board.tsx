@@ -6,6 +6,7 @@ import CardContainer from "./CardContainer.tsx";
 type BoardProps = {
     todos: Todo[],
     setTodos: (todos: Todo[]) => void,
+    getTodos: () => void
 }
 export default function Board(props: BoardProps) {
     const [todoTodos, setTodoTodos] = useState<Todo[]>([])
@@ -25,11 +26,12 @@ export default function Board(props: BoardProps) {
     const [input, setInput] = useState<string>("")
 
     function addTodo(input: string) {
-        const newTodo:TodoDTO = {description: input, status: "OPEN"}
+        const newTodo: TodoDTO = {description: input, status: "OPEN"}
         axios.post("/api/todo", newTodo).then(r => props.setTodos([...props.todos, r.data]))
+        props.getTodos()
     }
 
-    const handleSubmit = (event:React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         addTodo(input)
         setInput("")
@@ -50,15 +52,15 @@ export default function Board(props: BoardProps) {
             <tbody>
             <tr>
                 <td>
-                    {todoTodos.map(t => <CardContainer key={t.id} todo={t} todos={props.todos}
+                    {todoTodos.map(t => <CardContainer getTodos={props.getTodos} key={t.id} todo={t} todos={props.todos}
                                                        setTodos={props.setTodos}/>)}
                 </td>
                 <td>
-                    {doingTodos.map(t => <CardContainer key={t.id} todo={t} todos={props.todos}
+                    {doingTodos.map(t => <CardContainer getTodos={props.getTodos} key={t.id} todo={t} todos={props.todos}
                                                         setTodos={props.setTodos}/>)}
                 </td>
                 <td>
-                    {doneTodos.map(t => <CardContainer key={t.id} todo={t} todos={props.todos}
+                    {doneTodos.map(t => <CardContainer getTodos={props.getTodos} key={t.id} todo={t} todos={props.todos}
                                                        setTodos={props.setTodos}/>)}
                 </td>
 
