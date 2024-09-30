@@ -8,7 +8,7 @@ type EditCardProps = {
     setTodos: (todos: Todo[]) => void,
     editView: boolean
     isEditView: (editView: boolean) => void,
-    getTodos: () => void
+    fetchTodos: () => void
 }
 type Status = "OPEN" | "DOING" | "DONE"
 
@@ -31,9 +31,8 @@ export default function EditCard(props: EditCardProps) {
     function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
         const updatedTodo: TodoDTO = {description: newDescription, status: newStatus}
-        axios.put("/api/todo/" + props.todo.id, updatedTodo).then(r => props.setTodos([...props.todos, r.data]))
+        axios.put("/api/todo/" + props.todo.id, updatedTodo).then(() => props.fetchTodos())
         props.isEditView(!props.editView)
-        props.getTodos()
     }
 
     return <>

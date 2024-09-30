@@ -9,7 +9,7 @@ type TodoCardProps = {
     editView: boolean
     isDetailView: (detailView: boolean) => void,
     isEditView: (editView: boolean) => void,
-    getTodos: () => void
+    fetchTodos: () => void
 }
 
 export default function TodoCard(props: TodoCardProps) {
@@ -18,14 +18,12 @@ export default function TodoCard(props: TodoCardProps) {
         if (props.todo.status !== "DONE") {
             const newStatus: string = props.todo.status === "OPEN" ? "DOING" : "DONE"
             const updatedTodo: TodoDTO = {description: props.todo.description, status: newStatus}
-            axios.put("/api/todo/" + props.todo.id, updatedTodo).then(r => props.setTodos([...props.todos, r.data]))
-            props.getTodos()
+            axios.put("/api/todo/" + props.todo.id, updatedTodo).then(() => props.fetchTodos())
         }
         // if status is done, delete to do
         else {
             axios.delete("/api/todo/" + props.todo.id)
-            axios.get("/api/todo").then(r => props.setTodos(r.data))
-            props.getTodos()
+            axios.get("/api/todo").then(() => props.fetchTodos())
         }
     }
 

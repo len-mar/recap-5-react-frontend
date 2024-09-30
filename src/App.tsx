@@ -3,10 +3,6 @@ import './App.css'
 import Board from "./assets/components/Board.tsx";
 import axios from "axios";
 
-// TODO: refactor and abstract where it makes sense
-// FIXME: fix update of board when todo is updated - use fetch data
-
-
 export type Todo = {
     description: string,
     status: string
@@ -21,17 +17,24 @@ export type TodoDTO = {
 function App() {
     const [todos, setTodos] = useState<Todo[]>([])
 
-    // get todos from api
-    function getTodos(){
-        axios.get("/api/todo").then(r => setTodos(r.data))
-    }
+    // gets todos from api and update
+    const fetchTodos = async () => {
+        try {
+            const response = await axios.get('/api/todo');
+            setTodos(response.data);
+        } catch (error) {
+            console.error('Error fetching todos:', error);
+        }
+    };
+
+    // gets todos once on load
     useEffect(() => {
-        getTodos()
+        fetchTodos()
     }, [])
 
     return (
         <>
-            <Board todos={todos} setTodos={setTodos} getTodos={getTodos}/>
+            <Board todos={todos} setTodos={setTodos} fetchTodos={fetchTodos}/>
         </>
 
     )
